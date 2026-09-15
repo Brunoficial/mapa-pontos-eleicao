@@ -14,10 +14,10 @@ map.addLayer(markers);
 // 🧠 VARIÁVEIS GLOBAIS
 // =======================
 let dadosGlobais = [];
-
-// =======================
-// 🎨 COR BASEADA EM OCs
-// =======================
+let cidades_selecionadas = new Set([
+  "NATAL", "PARNAMIRIM", "MACAÍBA", "SÃO JOSÉ DE MIPIBU", 
+  "VERA CRUZ", "MONTE ALEGRE", "NÍSIA FLORESTA", "SENADOR GEORGINO AVELINO"
+]);
 
 // =======================
 // 📍 RENDERIZAR PONTOS
@@ -59,17 +59,11 @@ function renderizarPontos(dados) {
 }
 
 // =======================
-// 🔍 FILTRO
+// 🔍 FILTRO POR CIDADE
 // =======================
 function filtrar() {
-  const barramento = document.getElementById("searchBarramento")?.value.toLowerCase() || "";
-  const placa = document.getElementById("searchPlaca")?.value.toLowerCase() || "";
-
   const filtrados = dadosGlobais.filter(ponto => {
-    const b = (ponto.BARRAMENTO || "").toLowerCase();
-    const p = (ponto.DE_PLACA || "").toLowerCase();
-
-    return b.includes(barramento) && p.includes(placa);
+    return cidades_selecionadas.has(ponto.CIDADE);
   });
 
   renderizarPontos(filtrados);
@@ -88,19 +82,21 @@ Papa.parse("locais_de_votacao_2026.csv", {
 });
 
 // =======================
-// 🎯 EVENTOS DE BUSCA
+// 🎯 EVENTOS DE FILTRO DE CIDADES
 // =======================
 document.addEventListener("DOMContentLoaded", () => {
-  const inputBarramento = document.getElementById("searchBarramento");
-  const inputPlaca = document.getElementById("searchPlaca");
+  const checkboxes = document.querySelectorAll(".city-checkbox");
 
-  if (inputBarramento) {
-    inputBarramento.addEventListener("input", filtrar);
-  }
-
-  if (inputPlaca) {
-    inputPlaca.addEventListener("input", filtrar);
-  }
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", function() {
+      if (this.checked) {
+        cidades_selecionadas.add(this.value);
+      } else {
+        cidades_selecionadas.delete(this.value);
+      }
+      filtrar();
+    });
+  });
 });
 
 // =======================
