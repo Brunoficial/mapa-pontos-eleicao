@@ -91,16 +91,22 @@ Papa.parse("locais_de_votacao_2026.csv", {
   complete: function(results) {
     dadosGlobais = results.data;
     renderizarPontos(dadosGlobais);
+    
+    // Configura os eventos dos checkboxes DEPOIS que os dados estão carregados
+    configurarFiltros();
   }
 });
 
 // =======================
-// 🎯 EVENTOS DE FILTRO DE CIDADES
+// 🎯 CONFIGURAR FILTROS DE CIDADES
 // =======================
-document.addEventListener("DOMContentLoaded", () => {
+function configurarFiltros() {
   const checkboxes = document.querySelectorAll(".city-checkbox");
 
   checkboxes.forEach(checkbox => {
+    // Normaliza o valor do checkbox para comparação consistente
+    const valorNormalizado = normalizarString(checkbox.value);
+    
     checkbox.addEventListener("change", function() {
       if (this.checked) {
         cidades_selecionadas.add(this.value);
@@ -110,7 +116,7 @@ document.addEventListener("DOMContentLoaded", () => {
       filtrar();
     });
   });
-});
+}
 
 // =======================
 // 📍 GEOLOCALIZAÇÃO
