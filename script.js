@@ -33,13 +33,13 @@ function renderizarPontos(dados) {
 
     if (isNaN(lat) || isNaN(lng)) return;
 
-    const cor = "green"
+    const cor = "blue"
 
     const marker = L.circleMarker([lat, lng], {
-      radius: 6,
+      radius: 10,
       fillColor: cor,
       color: "#000",
-      weight: 5,
+      weight: 1,
       fillOpacity: 0.8
     });
 
