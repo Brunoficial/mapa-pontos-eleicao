@@ -19,11 +19,6 @@ let cidades_selecionadas = new Set([
   "VERA CRUZ", "MONTE ALEGRE", "NÍSIA FLORESTA", "SENADOR GEORGINO AVELINO"
 ]);
 
-// Função para normalizar strings (remove acentos)
-function normalizarString(str) {
-  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
-}
-
 // =======================
 // 📍 RENDERIZAR PONTOS
 // =======================
@@ -68,18 +63,28 @@ function renderizarPontos(dados) {
 // =======================
 function filtrar() {
   const filtrados = dadosGlobais.filter(ponto => {
-    const cidadeNormalizada = normalizarString(ponto.CIDADE);
-    
-    // Verifica se a cidade normalizada está na lista de selecionadas
-    for (let cidadeSelecionada of cidades_selecionadas) {
-      if (normalizarString(cidadeSelecionada) === cidadeNormalizada) {
-        return true;
-      }
-    }
-    return false;
+    return cidades_selecionadas.has(ponto.CIDADE);
   });
 
   renderizarPontos(filtrados);
+}
+
+// =======================
+// 🎯 CONFIGURAR FILTROS DE CIDADES
+// =======================
+function configurarFiltros() {
+  const checkboxes = document.querySelectorAll(".city-checkbox");
+
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener("change", function() {
+      if (this.checked) {
+        cidades_selecionadas.add(this.value);
+      } else {
+        cidades_selecionadas.delete(this.value);
+      }
+      filtrar();
+    });
+  });
 }
 
 // =======================
@@ -91,32 +96,8 @@ Papa.parse("locais_de_votacao_2026.csv", {
   complete: function(results) {
     dadosGlobais = results.data;
     renderizarPontos(dadosGlobais);
-    
-    // Configura os eventos dos checkboxes DEPOIS que os dados estão carregados
-    configurarFiltros();
   }
 });
-
-// =======================
-// 🎯 CONFIGURAR FILTROS DE CIDADES
-// =======================
-function configurarFiltros() {
-  const checkboxes = document.querySelectorAll(".city-checkbox");
-
-  checkboxes.forEach(checkbox => {
-    // Normaliza o valor do checkbox para comparação consistente
-    const valorNormalizado = normalizarString(checkbox.value);
-    
-    checkbox.addEventListener("change", function() {
-      if (this.checked) {
-        cidades_selecionadas.add(this.value);
-      } else {
-        cidades_selecionadas.delete(this.value);
-      }
-      filtrar();
-    });
-  });
-}
 
 // =======================
 // 📍 GEOLOCALIZAÇÃO
@@ -152,4 +133,11 @@ map.on("click", function(e) {
   coordMarker = L.marker(e.latlng).addTo(map)
     .bindPopup(`Lat: ${e.latlng.lat.toFixed(6)}<br>Lng: ${e.latlng.lng.toFixed(6)}`)
     .openPopup();
+});
+
+// =======================
+// 🚀 INICIALIZAR AO CARREGAR A PÁGINA
+// =======================
+document.addEventListener("DOMContentLoaded", () => {
+  configurarFiltros();
 });
