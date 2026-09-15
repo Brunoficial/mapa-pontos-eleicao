@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa de Pontos</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Cluster -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+  <!-- Seu CSS -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<!-- Abas -->
+<div class="top-tabs">
+  <a href="#" class="tab active">Mapa pontos de votação</a>
+</div>
+
+<div class="search-box">
+  <input type="text" id="searchBarramento" placeholder="Buscar por Barramento">
+  <input type="text" id="searchPlaca" placeholder="Buscar por Placa">
+</div>
+
+<!-- Mapa -->
+<div id="map"></div>
+
+<!-- Botões -->
+<div class="loc-btn" onclick="goToLocation()">📍</div>
+<div class="coord-btn" onclick="toggleCoordMode()">📌</div>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+<!-- PapaParse -->
+<script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+
+<!-- Seu script -->
+<script src="scripts/script.js"></script>
+
+</body>
+</html>
