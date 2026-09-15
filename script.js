@@ -19,6 +19,11 @@ let cidades_selecionadas = new Set([
   "VERA CRUZ", "MONTE ALEGRE", "NÍSIA FLORESTA", "SENADOR GEORGINO AVELINO"
 ]);
 
+// Função para normalizar strings (remove acentos)
+function normalizarString(str) {
+  return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toUpperCase();
+}
+
 // =======================
 // 📍 RENDERIZAR PONTOS
 // =======================
@@ -63,7 +68,15 @@ function renderizarPontos(dados) {
 // =======================
 function filtrar() {
   const filtrados = dadosGlobais.filter(ponto => {
-    return cidades_selecionadas.has(ponto.CIDADE);
+    const cidadeNormalizada = normalizarString(ponto.CIDADE);
+    
+    // Verifica se a cidade normalizada está na lista de selecionadas
+    for (let cidadeSelecionada of cidades_selecionadas) {
+      if (normalizarString(cidadeSelecionada) === cidadeNormalizada) {
+        return true;
+      }
+    }
+    return false;
   });
 
   renderizarPontos(filtrados);
