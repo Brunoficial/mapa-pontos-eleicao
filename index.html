@@ -23,17 +23,25 @@
   <a href="#" class="tab active">Mapa pontos de votação</a>
 </div>
 
-<div class="search-box">
-  <input type="text" id="searchBarramento" placeholder="Buscar por Barramento">
-  <input type="text" id="searchPlaca" placeholder="Buscar por Placa">
-</div>
-
 <!-- Mapa -->
 <div id="map"></div>
 
 <!-- Botões -->
 <div class="loc-btn" onclick="goToLocation()">📍</div>
 <div class="coord-btn" onclick="toggleCoordMode()">📌</div>
+
+<!-- Filtro de Cidades -->
+<div class="city-filter">
+  <h4>Filtrar por Cidade</h4>
+  <label><input type="checkbox" class="city-checkbox" value="NATAL" checked> NATAL</label>
+  <label><input type="checkbox" class="city-checkbox" value="PARNAMIRIM" checked> PARNAMIRIM</label>
+  <label><input type="checkbox" class="city-checkbox" value="MACAÍBA" checked> MACAÍBA</label>
+  <label><input type="checkbox" class="city-checkbox" value="SÃO JOSÉ DE MIPIBU" checked> SÃO JOSÉ DE MIPIBU</label>
+  <label><input type="checkbox" class="city-checkbox" value="VERA CRUZ" checked> VERA CRUZ</label>
+  <label><input type="checkbox" class="city-checkbox" value="MONTE ALEGRE" checked> MONTE ALEGRE</label>
+  <label><input type="checkbox" class="city-checkbox" value="NÍSIA FLORESTA" checked> NÍSIA FLORESTA</label>
+  <label><input type="checkbox" class="city-checkbox" value="SENADOR GEORGINO AVELINO" checked> SENADOR GEORGINO AVELINO</label>
+</div>
 
 <!-- Scripts -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
