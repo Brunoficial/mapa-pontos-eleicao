@@ -15,8 +15,8 @@ map.addLayer(markers);
 // =======================
 let dadosGlobais = [];
 let cidades_selecionadas = new Set([
-  "NATAL", "PARNAMIRIM", "MACAÍBA", "SÃO JOSÉ DE MIPIBU", 
-  "VERA CRUZ", "MONTE ALEGRE", "NÍSIA FLORESTA", "SENADOR GEORGINO AVELINO"
+  "NATAL", "PARNAMIRIM", "MACAIBA", "SÃO JOSE DE MIPIBU", 
+  "VERA CRUZ", "MONTE ALEGRE", "NISIA FLORESTA", "SENADOR GEORGINO AVELINO"
 ]);
 
 // =======================
