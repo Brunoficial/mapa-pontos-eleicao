@@ -70,9 +70,21 @@ function filtrar() {
 }
 
 // =======================
-// 🎯 CONFIGURAR FILTROS DE CIDADES
+// 📥 CARREGAR CSV
 // =======================
-function configurarFiltros() {
+Papa.parse("locais_de_votacao_2026.csv", {
+  download: true,
+  header: true,
+  complete: function(results) {
+    dadosGlobais = results.data;
+    renderizarPontos(dadosGlobais);
+  }
+});
+
+// =======================
+// 🎯 EVENTOS DE FILTRO DE CIDADES
+// =======================
+document.addEventListener("DOMContentLoaded", () => {
   const checkboxes = document.querySelectorAll(".city-checkbox");
 
   checkboxes.forEach(checkbox => {
@@ -85,19 +97,6 @@ function configurarFiltros() {
       filtrar();
     });
   });
-}
-
-// =======================
-// 📥 CARREGAR CSV
-// =======================
-Papa.parse("locais_de_votacao_2026.csv", {
-  download: true,
-  header: true,
-  complete: function(results) {
-    // Filtra linhas vazias
-    dadosGlobais = results.data.filter(row => row.CIDADE && row.LATITUDE && row.LONGITUDE);
-    renderizarPontos(dadosGlobais);
-  }
 });
 
 // =======================
@@ -134,11 +133,4 @@ map.on("click", function(e) {
   coordMarker = L.marker(e.latlng).addTo(map)
     .bindPopup(`Lat: ${e.latlng.lat.toFixed(6)}<br>Lng: ${e.latlng.lng.toFixed(6)}`)
     .openPopup();
-});
-
-// =======================
-// 🚀 INICIALIZAR AO CARREGAR A PÁGINA
-// =======================
-document.addEventListener("DOMContentLoaded", () => {
-  configurarFiltros();
 });
