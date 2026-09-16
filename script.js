@@ -1,6 +1,8 @@
 // =======================
 // 🌍 INICIALIZAÇÃO DO MAPA
 // =======================
+console.log("Teste")
+
 const map = L.map('map').setView([-5.8, -35.2], 10);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
