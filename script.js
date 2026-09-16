@@ -94,7 +94,8 @@ Papa.parse("locais_de_votacao_2026.csv", {
   download: true,
   header: true,
   complete: function(results) {
-    dadosGlobais = results.data;
+    // Filtra linhas vazias
+    dadosGlobais = results.data.filter(row => row.CIDADE && row.LATITUDE && row.LONGITUDE);
     renderizarPontos(dadosGlobais);
   }
 });
