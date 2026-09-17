@@ -1,4 +1,4 @@
-class PontoDeVotacao {
+class LocalDeVotacao {
     id;
     nome_local;
     cidade;
@@ -156,4 +156,4 @@ class PontoDeVotacao {
     }
 }
 
-export default PontoDeVotacao;
+export default LocalDeVotacao;
