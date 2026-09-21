@@ -344,27 +344,9 @@ function salvarPonto(id) {
         `Erro HTTP: ${response.status}`
       );
     }
-
-    return response.json();
-
-  })
-
-  .then(data => {
-
-    console.log(
-      "Resposta da API:",
-      data
-    );
-
-
-    // Atualiza os dados locais
-
+  
     ponto.status = novoStatus;
-
     ponto.observacao = novaObservacao;
-
-
-    // Fecha o popup
 
     map.closePopup();
 
@@ -386,10 +368,6 @@ function salvarPonto(id) {
 
 }
 
-
-// =======================
-// ❌ CANCELAR EDIÇÃO
-// =======================
 
 function cancelarEdicao() {
 
@@ -415,11 +393,6 @@ function filtrar() {
   renderizarPontos(filtrados);
 
 }
-
-
-// =======================
-// 📡 CARREGAR DADOS DA API
-// =======================
 
 fetch(
   "https://mapa-pontos-eleicao.onrender.com/local/listar"
