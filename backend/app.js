@@ -1,5 +1,5 @@
 import express from 'express'
-import localDeVotacaoRouter from './local_de_votacao/localDeVotacaoRouter.js'
+import localDeVotacaoRouter from './src/local_de_votacao/localDeVotacaoRouter.js'
 import cors from 'cors'
 import 'dotenv/config'
 

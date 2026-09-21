@@ -1,4 +1,4 @@
-import LocalDeVotacaoService from "../services/LocalDeVotacaoService.js";
+import LocalDeVotacaoService from "./localDeVotacaoService.js";
 import express from "express";
 import dbConnection from "../config/db.js";
 

@@ -1,4 +1,4 @@
-import LocalDeVotacaoRepository from "../repositories/LocalDeVotacaoRepository.js";
+import LocalDeVotacaoRepository from './localDeVotacaoRepository.js';
 
 class LocalDeVotacaoService {
     constructor(db) {

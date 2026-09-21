@@ -10,8 +10,8 @@ CREATE TABLE locais_de_votacao (
     trafo VARCHAR(255) NOT NULL,
     alimentador VARCHAR(255) NOT NULL,
 
-    lat DECIMAL(10,8) NOT NULL,
-    `long` DECIMAL(11,8) NOT NULL,
+    latitude DECIMAL(10,8) NOT NULL,
+    longitude DECIMAL(11,8) NOT NULL,
 
     utd VARCHAR(255) NOT NUll,
     utep VARCHAR(255) NOT NULL,
@@ -29,5 +29,5 @@ CREATE TABLE locais_de_votacao (
         'Outro'
     ) NOT NULL DEFAULT 'Não visitado',
 
-    observacao TEXT NULL,
-);
+    observacao TEXT NULL
+)
