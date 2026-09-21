@@ -39,6 +39,7 @@ let cidades_selecionadas = new Set([
 
 const statusOptions = [
   "Não visitado",
+  "Nenhum defeito encontrado",
   "Poda BT",
   "Poda MT",
   "Cruzeta deteriorada",
