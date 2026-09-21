@@ -344,13 +344,11 @@ function salvarPonto(id) {
         `Erro HTTP: ${response.status}`
       );
     }
+
+    Object.assign(ponto, dadosAtualizados)
+    filtrar() 
   
-    ponto.status = novoStatus;
-    ponto.observacao = novaObservacao;
-
     map.closePopup();
-
-
     alert("Ponto atualizado com sucesso!");
 
   })
