@@ -31,6 +31,8 @@ class LocalDeVotacaoService {
 
         const local = await this.LocalDeVotacaoRepository.encontrarPorId(id);
 
+        console.log(localAtualizado.status)
+
         if (!local) {
             return res.status(404).json({
                 error: "Local de votação não encontrado"

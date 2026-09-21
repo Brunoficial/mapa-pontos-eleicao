@@ -352,6 +352,8 @@ function salvarPonto(id) {
     map.closePopup();
     alert("Ponto atualizado com sucesso!");
 
+    console.log(dadosAtualizados.status)
+
   })
 
   .catch(error => {

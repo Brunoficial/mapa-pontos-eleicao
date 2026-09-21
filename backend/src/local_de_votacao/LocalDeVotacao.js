@@ -7,8 +7,8 @@ class LocalDeVotacao {
     poste;
     trafo;
     alimentador;
-    lat;
-    long;
+    latitude;
+    longitude;
     utd;
     utep;
     status;
@@ -22,8 +22,8 @@ class LocalDeVotacao {
         poste,
         trafo,
         alimentador,
-        lat,
-        long,
+        latitude,
+        longitude,
         utd,
         utep,
         status = 'Não visitado',
@@ -38,8 +38,8 @@ class LocalDeVotacao {
         this.poste = poste;
         this.trafo = trafo;
         this.alimentador = alimentador;
-        this.lat = lat;
-        this.long = long;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.utd = utd;
         this.utep = utep;
         this.status = status;
@@ -78,12 +78,12 @@ class LocalDeVotacao {
         return this.alimentador;
     }
 
-    get_lat() {
-        return this.lat;
+    get_latitude() {
+        return this.latitude;
     }
 
-    get_long() {
-        return this.long;
+    get_longitude() {
+        return this.longitude;
     }
 
     get_utd() {
@@ -131,12 +131,12 @@ class LocalDeVotacao {
         this.alimentador = alimentador;
     }
 
-    set_lat(lat) {
-        this.lat = lat;
+    set_latitude(latitude) {
+        this.latitude = latitude;
     }
 
-    set_long(long) {
-        this.long = long;
+    set_longitude(longitude) {
+        this.longitude = longitude;
     }
 
     set_utd(utd) {
