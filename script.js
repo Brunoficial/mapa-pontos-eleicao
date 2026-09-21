@@ -325,7 +325,7 @@ function salvarPonto(id) {
   // =======================
 
   fetch(
-    "https://mapa-pontos-eleicao.onrender.com/local/atualizar",
+    `https://mapa-pontos-eleicao.onrender.com/local/atualizar/${id}`,
     {
       method: "PUT",
 
