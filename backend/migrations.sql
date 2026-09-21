@@ -1,20 +1,20 @@
 CREATE TABLE locais_de_votacao (
     id INT PRIMARY KEY,
 
-    nome_local VARCHAR(255) NOT NULL,
-    cidade VARCHAR(255) NOT NULL,
-    bairro VARCHAR(255) NOT NULL,
+    nome_local VARCHAR(255)  NULL,
+    cidade VARCHAR(255)  NULL,
+    bairro VARCHAR(255)  NULL,
 
-    conta_contrato VARCHAR(255) NOT NULL,
-    poste VARCHAR(255) NOT NULL,
-    trafo VARCHAR(255) NOT NULL,
-    alimentador VARCHAR(255) NOT NULL,
+    conta_contrato VARCHAR(255)  NULL,
+    poste VARCHAR(255)  NULL,
+    trafo VARCHAR(255)  NULL,
+    alimentador VARCHAR(255)  NULL,
 
     latitude DECIMAL(10,8) NOT NULL,
     longitude DECIMAL(11,8) NOT NULL,
 
-    utd VARCHAR(255) NOT NUll,
-    utep VARCHAR(255) NOT NULL,
+    utd VARCHAR(255)  NUll,
+    utep VARCHAR(255)  NULL,
 
     status ENUM(
         'Não visitado',
