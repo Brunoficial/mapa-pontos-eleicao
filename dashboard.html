@@ -1,0 +1,458 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Pontos de Votação</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f1f5f9;
+      color: #1e293b;
+    }
+
+    header {
+      background: #1e293b;
+      color: white;
+      padding: 20px 28px;
+    }
+
+    header h1 {
+      margin: 0 0 6px;
+      font-size: 24px;
+    }
+
+    header p {
+      margin: 0;
+      color: #cbd5e1;
+      font-size: 14px;
+    }
+
+    .container {
+      max-width: 1600px;
+      margin: auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .topbar h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .btn {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #334155;
+    }
+
+    .btn:hover {
+      filter: brightness(0.95);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      border-left: 4px solid #2563eb;
+    }
+
+    .card.red {
+      border-left-color: #dc2626;
+    }
+
+    .card.green {
+      border-left-color: #16a34a;
+    }
+
+    .card.orange {
+      border-left-color: #f59e0b;
+    }
+
+    .card-title {
+      color: #64748b;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .card-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .filters {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      margin-bottom: 22px;
+    }
+
+    .filters h3 {
+      margin: 0 0 16px;
+      font-size: 17px;
+    }
+
+    .filter-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      align-items: end;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-width: 0;
+    }
+
+    .filter-group label {
+      font-size: 13px;
+      font-weight: bold;
+      color: #475569;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      width: 100%;
+      min-width: 0;
+      padding: 11px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      background: white;
+      font-size: 14px;
+      color: #1e293b;
+    }
+
+    .filter-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      overflow: hidden;
+    }
+
+    .table-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 18px 20px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .table-header h3 {
+      margin: 0;
+      font-size: 17px;
+    }
+
+    .result-count {
+      color: #64748b;
+      font-size: 13px;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      max-height: 65vh;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1500px;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f8fafc;
+      color: #475569;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .status-pendente {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .status-concluido {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-outro {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .empty {
+      padding: 36px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .loading {
+      padding: 36px;
+      text-align: center;
+      color: #64748b;
+    }
+
+    .error {
+      margin-bottom: 16px;
+      padding: 14px;
+      background: #fee2e2;
+      color: #991b1b;
+      border-radius: 8px;
+      display: none;
+    }
+
+    @media (max-width: 900px) {
+      .cards {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .filter-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 550px) {
+      header {
+        padding: 18px;
+      }
+
+      header h1 {
+        font-size: 20px;
+      }
+
+      .container {
+        padding: 14px;
+      }
+
+      .cards {
+        gap: 10px;
+      }
+
+      .card {
+        padding: 14px;
+      }
+
+      .card-value {
+        font-size: 23px;
+      }
+
+      .filter-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        padding: 15px;
+      }
+
+      .table-header {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>Dashboard de Pontos de Votação</h1>
+    <p>Consulta e acompanhamento dos locais cadastrados</p>
+  </header>
+
+  <main class="container">
+
+    <div class="topbar">
+      <h2>Visão geral</h2>
+      <button class="btn btn-primary" onclick="carregarDados()">
+        ↻ Atualizar dados
+      </button>
+    </div>
+
+    <div id="error" class="error"></div>
+
+    <!-- Indicadores -->
+    <section class="cards">
+      <div class="card">
+        <div class="card-title">Total de pontos</div>
+        <div class="card-value" id="totalPontos">—</div>
+      </div>
+
+      <div class="card red">
+        <div class="card-title">Não visitados</div>
+        <div class="card-value" id="naoVisitados">—</div>
+      </div>
+
+      <div class="card green">
+        <div class="card-title">Com defeito registrado</div>
+        <div class="card-value" id="comDefeito">—</div>
+      </div>
+
+      <div class="card orange">
+        <div class="card-title">Sem defeito encontrado</div>
+        <div class="card-value" id="semDefeito">—</div>
+      </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="filters">
+      <h3>Filtros</h3>
+
+      <div class="filter-grid">
+
+        <div class="filter-group">
+          <label for="filtroCidade">Cidade</label>
+          <select id="filtroCidade">
+            <option value="">Todas as cidades</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filtroAlimentador">Alimentador</label>
+          <select id="filtroAlimentador">
+            <option value="">Todos os alimentadores</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="filtroStatus">Status</label>
+          <select id="filtroStatus">
+            <option value="">Todos os status</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label for="busca">Buscar ponto</label>
+          <input
+            type="search"
+            id="busca"
+            placeholder="ID, local, bairro ou conta..."
+          >
+        </div>
+
+        <div class="filter-actions">
+          <button class="btn btn-secondary" onclick="limparFiltros()">
+            Limpar filtros
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Tabela -->
+    <section class="table-container">
+
+      <div class="table-header">
+        <h3>Cadastro de pontos</h3>
+        <span class="result-count" id="contadorResultados">
+          Carregando...
+        </span>
+      </div>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Local de votação</th>
+              <th>Cidade</th>
+              <th>Bairro</th>
+              <th>Alimentador</th>
+              <th>Conta contrato</th>
+              <th>Poste</th>
+              <th>Transformador</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+              <th>UTD</th>
+              <th>UTEP</th>
+              <th>Status</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+
+          <tbody id="tabelaPontos">
+            <tr>
+              <td colspan="14" class="loading">
+                Carregando dados...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </main>
+
+  <script src="dashboard.js"></script>
+</body>
+</html>
