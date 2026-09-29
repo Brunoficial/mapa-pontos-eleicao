@@ -100,7 +100,7 @@ function renderizarPontos(dados) {
     const marker = L.circleMarker([lat, lng], {
 
       radius: 10,
-      fillColor: "blue",
+      fillColor: ponto.status === "Não visitado" ? "red" : "blue",
       color: "#000",
       weight: 1,
       fillOpacity: 0.8
