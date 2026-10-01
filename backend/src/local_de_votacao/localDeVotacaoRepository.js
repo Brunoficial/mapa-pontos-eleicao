@@ -36,7 +36,9 @@ class LocalDeVotacaoRepository {
          utd = ?,
          utep = ?,
          status = ?,
-         observacao = ?
+         observacao = ?,
+         executado = ?,
+         si = ?
        WHERE id = ?`,
       [
         ponto.nome_local,
@@ -52,6 +54,8 @@ class LocalDeVotacaoRepository {
         ponto.utep,
         ponto.status,
         ponto.observacao,
+        ponto.executado,
+        ponto.si,
         id,
       ]
     );
