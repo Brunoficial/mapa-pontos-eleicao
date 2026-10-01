@@ -73,6 +73,11 @@
       color: #334155;
     }
 
+    .btn-link {
+      background: #f59e0b;
+      color: white;
+    }
+
     .btn:hover {
       filter: brightness(0.95);
     }
@@ -332,9 +337,14 @@
 
     <div class="topbar">
       <h2>Visão geral</h2>
-      <button class="btn btn-primary" onclick="carregarDados()">
-        ↻ Atualizar dados
-      </button>
+      <div style="display: flex; gap: 12px;">
+        <button class="btn btn-primary" onclick="carregarDados()">
+          ↻ Atualizar dados
+        </button>
+        <a href="index.html" class="btn btn-link" style="text-decoration: none;">
+          🗺️ Voltar para o Mapa
+        </a>
+      </div>
     </div>
 
     <div id="error" class="error"></div>
