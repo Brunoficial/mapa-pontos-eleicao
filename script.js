@@ -192,6 +192,36 @@ function renderizarPontos(dados) {
         >${escaparHTML(ponto.observacao)}</textarea>
 
 
+        <label style="display: flex; align-items: center; margin-bottom: 10px;">
+          <input
+            type="checkbox"
+            id="executado-${ponto.id}"
+            ${ponto.executado ? "checked" : ""}
+            style="margin-right: 8px; cursor: pointer;"
+          >
+          <b>Executado</b>
+        </label>
+
+
+        <label>
+          <b>SI:</b>
+        </label>
+
+        <input
+          type="text"
+          id="si-${ponto.id}"
+          placeholder="Digite o valor de SI..."
+          value="${escaparHTML(ponto.si)}"
+          style="
+            width: 100%;
+            padding: 6px;
+            margin-top: 4px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+          "
+        >
+
+
         <div style="
           display: flex;
           gap: 8px;
@@ -266,8 +296,14 @@ function salvarPonto(id) {
   const observacaoElement =
     document.getElementById(`observacao-${id}`);
 
+  const executadoElement =
+    document.getElementById(`executado-${id}`);
 
-  if (!statusElement || !observacaoElement) {
+  const siElement =
+    document.getElementById(`si-${id}`);
+
+
+  if (!statusElement || !observacaoElement || !executadoElement || !siElement) {
     alert("Erro ao encontrar os campos.");
     return;
   }
@@ -276,6 +312,10 @@ function salvarPonto(id) {
   const novoStatus = statusElement.value;
 
   const novaObservacao = observacaoElement.value;
+
+  const novoExecutado = executadoElement.checked;
+
+  const novoSi = siElement.value;
 
 
   // =======================
@@ -310,7 +350,11 @@ function salvarPonto(id) {
 
     status: novoStatus,
 
-    observacao: novaObservacao
+    observacao: novaObservacao,
+
+    executado: novoExecutado,
+
+    si: novoSi
 
   };
 
