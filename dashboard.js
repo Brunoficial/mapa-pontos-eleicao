@@ -1,4 +1,3 @@
-
 const API_URL =
   "https://mapa-pontos-eleicao.onrender.com/local/listar";
 
@@ -9,6 +8,7 @@ const tabela = document.getElementById("tabelaPontos");
 const filtroCidade = document.getElementById("filtroCidade");
 const filtroAlimentador = document.getElementById("filtroAlimentador");
 const filtroStatus = document.getElementById("filtroStatus");
+const filtroExecutado = document.getElementById("filtroExecutado");
 const busca = document.getElementById("busca");
 const erro = document.getElementById("error");
 
@@ -57,12 +57,18 @@ function classeStatus(status) {
   return "status-outro";
 }
 
+function valorExecutado(ponto) {
+  return ponto.executado === true ||
+    ponto.executado === 1 ||
+    String(ponto.executado).toLowerCase() === "true";
+}
+
 // Carrega os dados da API
 async function carregarDados() {
   erro.style.display = "none";
   tabela.innerHTML = `
     <tr>
-      <td colspan="14" class="loading">
+      <td colspan="16" class="loading">
         Carregando dados...
       </td>
     </tr>
@@ -99,7 +105,7 @@ async function carregarDados() {
 
     tabela.innerHTML = `
       <tr>
-        <td colspan="14" class="empty">
+        <td colspan="16" class="empty">
           Erro ao carregar os dados.
         </td>
       </tr>
@@ -191,6 +197,7 @@ function aplicarFiltros() {
   const cidade = filtroCidade.value;
   const alimentador = filtroAlimentador.value;
   const status = filtroStatus.value;
+  const executado = filtroExecutado.value;
   const termoBusca = normalizarTexto(busca.value);
 
   const filtrados = todosOsPontos.filter(ponto => {
@@ -202,6 +209,10 @@ function aplicarFiltros() {
 
     const correspondeStatus =
       !status || ponto.status === status;
+
+    const executadoPonto = valorExecutado(ponto);
+    const correspondeExecutado =
+      executado === "" || String(executadoPonto) === executado;
 
     const textoPonto = normalizarTexto([
       ponto.id,
@@ -215,6 +226,7 @@ function aplicarFiltros() {
       ponto.utd,
       ponto.utep,
       ponto.status,
+      ponto.si,
       ponto.observacao
     ].join(" "));
 
@@ -225,6 +237,7 @@ function aplicarFiltros() {
       correspondeCidade &&
       correspondeAlimentador &&
       correspondeStatus &&
+      correspondeExecutado &&
       correspondeBusca
     );
   });
@@ -240,7 +253,7 @@ function renderizarTabela(pontos) {
   if (pontos.length === 0) {
     tabela.innerHTML = `
       <tr>
-        <td colspan="14" class="empty">
+        <td colspan="16" class="empty">
           Nenhum ponto encontrado com esses filtros.
         </td>
       </tr>
@@ -267,6 +280,8 @@ function renderizarTabela(pontos) {
           ${exibir(ponto.status)}
         </span>
       </td>
+      <td>${valorExecutado(ponto) ? "Sim" : "Não"}</td>
+      <td>${exibir(ponto.si)}</td>
       <td>${exibir(ponto.observacao)}</td>
     </tr>
   `).join("");
@@ -277,6 +292,7 @@ function limparFiltros() {
   filtroCidade.value = "";
   filtroAlimentador.value = "";
   filtroStatus.value = "";
+  filtroExecutado.value = "";
   busca.value = "";
 
   aplicarFiltros();
@@ -286,6 +302,7 @@ function limparFiltros() {
 filtroCidade.addEventListener("change", aplicarFiltros);
 filtroAlimentador.addEventListener("change", aplicarFiltros);
 filtroStatus.addEventListener("change", aplicarFiltros);
+filtroExecutado.addEventListener("change", aplicarFiltros);
 busca.addEventListener("input", aplicarFiltros);
 
 // Inicializa o dashboard
